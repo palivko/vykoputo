@@ -12,7 +12,7 @@ $config = [
     // Kontaktní údaje — používají se v navigaci, patičce i formuláři
     'contact' => [
         'phone'   => '+420 737 600 705',
-        'email'   => 'poptavka@vykopu.to',
+        'email'   => 'palivko@gmail.com',
         'name'    => 'Petr Glaser',
         'address' => 'Jerlochovice 61, 742 45 Fulnek',
         'area'    => 'Fulnek a okolí, okres Nový Jičín',
