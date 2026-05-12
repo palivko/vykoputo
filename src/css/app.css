@@ -1,0 +1,50 @@
+/* Kopie z node_modules, generuje `npm run copy-fonts`. */
+@import "./bootstrap-icons.css";
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+    html {
+        scroll-behavior: smooth;
+    }
+
+    body {
+        font-family: 'Inter', system-ui, sans-serif;
+        background-color: #F5F1EA;
+        color: #0F100F;
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
+    }
+
+    /* Offset pro fixní header při scroll-to-anchor */
+    :target {
+        scroll-margin-top: 72px;
+    }
+
+    /* Ladění detail/summary — odstranit výchozí šipku */
+    summary::-webkit-details-marker,
+    summary::marker {
+        display: none;
+    }
+}
+
+@layer components {
+    /* Header — scrollovaný stav */
+    .header-scrolled {
+        @apply bg-ink-900/95 backdrop-blur-sm border-ink-700/60;
+    }
+
+    /* Primární CTA tlačítko */
+    .btn-primary {
+        @apply inline-block bg-clay hover:bg-clay-600 active:bg-clay-600
+               text-cream-50 font-display font-semibold uppercase tracking-widest
+               text-sm px-6 py-3.5 rounded-md transition-colors duration-200 cursor-pointer;
+    }
+
+    /* Oranžový sekční label (CO UMÍME, NAŠE TECHNIKA…) */
+    .section-label {
+        @apply block text-clay font-display font-semibold uppercase tracking-widest text-xs mb-3;
+    }
+}

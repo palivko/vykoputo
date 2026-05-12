@@ -1,0 +1,38 @@
+# Dependabot — automatické PR pro updaty závislostí.
+# https://docs.github.com/en/code-security/dependabot/dependabot-version-updates/configuration-options-for-the-dependabot.yml-file
+
+version: 2
+updates:
+  # npm — sleduje package.json + package-lock.json.
+  # Updaty Tailwind, Sharp, build závislostí, frontend knihoven.
+  - package-ecosystem: "npm"
+    directory: "/"
+    schedule:
+      interval: "weekly"
+      day: "monday"
+    open-pull-requests-limit: 5
+    labels:
+      - "dependencies"
+      - "javascript"
+    commit-message:
+      prefix: "npm"
+    ignore:
+      # Tailwind v4 je major migration (změny CLI, config, syntax @import,
+      # rename CSS tříd). Major upgrade udělej ručně, až bude čas na testování.
+      # Patch a minor (3.x.y) updaty nadále chodí automaticky.
+      - dependency-name: "tailwindcss"
+        update-types: ["version-update:semver-major"]
+
+  # GitHub Actions — sleduje verze akcí použitých ve workflow souborech.
+  # (např. actions/checkout, actions/setup-node, webfactory/ssh-agent).
+  - package-ecosystem: "github-actions"
+    directory: "/"
+    schedule:
+      interval: "weekly"
+      day: "monday"
+    open-pull-requests-limit: 5
+    labels:
+      - "dependencies"
+      - "ci"
+    commit-message:
+      prefix: "actions"

@@ -1,0 +1,153 @@
+name: Deploy to production
+
+# Spouští se při pushi do main (kromě commitů obsahujících "[skip ci]").
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+# Zabrání souběžným deployům — kdyby přiletělo víc pushů rychle za sebou,
+# starší se zruší a vyhraje ten poslední.
+concurrency:
+  group: deploy-production
+  cancel-in-progress: true
+
+env:
+  # Konfigurace per-projekt přes GitHub Variables (Settings → Secrets and
+  # variables → Actions → Variables tab). Workflow je projekt-agnostický,
+  # variables se nastaví v UI bez nutnosti editace YAMLu.
+  #
+  #   PRODUCTION_TARGET_DIR    Adresář na produkci, kam skončí source/public/
+  #                            (= název docrootu subdomény, např. "new", "www")
+  #   PRODUCTION_GIT_REMOTE    Plný SSH URL hosting Git repa
+  #                            (např. "git@www.example.cz:example.cz")
+  #   PRODUCTION_GIT_HOST      Hostname pro ssh-keyscan
+  #                            (např. "www.example.cz")
+  #   PRODUCTION_URL           Veřejná URL produkce pro post-deploy smoke test
+  #                            (např. "https://new.example.cz")
+  TARGET_DIR: ${{ vars.PRODUCTION_TARGET_DIR }}
+  GIT_REMOTE: ${{ vars.PRODUCTION_GIT_REMOTE }}
+  GIT_HOST: ${{ vars.PRODUCTION_GIT_HOST }}
+  PRODUCTION_URL: ${{ vars.PRODUCTION_URL }}
+
+jobs:
+  deploy:
+    name: Build and deploy
+    runs-on: ubuntu-latest
+    # Skip pokud:
+    #   - commit má [skip ci]
+    #   - chybí Variables (template repo nebo nedokončený setup)
+    if: ${{ vars.PRODUCTION_TARGET_DIR != '' && !contains(github.event.head_commit.message, '[skip ci]') }}
+
+    steps:
+      - name: Checkout source
+        uses: actions/checkout@v6
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v6
+        with:
+          node-version: '24'
+          cache: npm
+
+      - name: Install npm dependencies
+        run: npm ci
+
+      - name: Build assets (Tailwind + copy from node_modules)
+        run: npm run build
+
+      - name: Setup SSH agent
+        uses: webfactory/ssh-agent@v0.10.0
+        with:
+          ssh-private-key: ${{ secrets.PRODUCTION_SSH_KEY }}
+
+      - name: Validate variables
+        run: |
+          if [ -z "$TARGET_DIR" ] || [ -z "$GIT_REMOTE" ] || [ -z "$GIT_HOST" ] || [ -z "$PRODUCTION_URL" ]; then
+            echo "::error::Chybí GitHub Variable PRODUCTION_TARGET_DIR / PRODUCTION_GIT_REMOTE / PRODUCTION_GIT_HOST / PRODUCTION_URL. Nastav v Settings → Secrets and variables → Actions → Variables."
+            exit 1
+          fi
+
+      - name: Add production host to known_hosts
+        run: |
+          mkdir -p ~/.ssh
+          ssh-keyscan -H "$GIT_HOST" >> ~/.ssh/known_hosts 2>/dev/null
+
+      - name: Clone production repo
+        run: |
+          git clone "$GIT_REMOTE" production-repo
+
+      - name: Prepare orphan production branch
+        working-directory: production-repo
+        run: |
+          # Orphan = nová větev bez parenta. Při force-pushi přepíše
+          # produkční historii čistým commitem. Rollback v případě potřeby
+          # uděláme přes redeploy starší git SHA na main.
+          git checkout --orphan production-deploy
+          # Po orphan checkout staging area dědí soubory z předchozí větve —
+          # vyčistíme staging area i pracovní adresář, aby rsync pracoval s prázdným stavem.
+          git rm -rf . 2>/dev/null || true
+          find . -mindepth 1 -maxdepth 1 ! -name '.git' -exec rm -rf {} +
+
+      - name: Sync project root (vše kromě public/)
+        run: |
+          # includes/, src/, scripts/, atd. jdou do ROOTU produkční větve.
+          # public/ se zpracuje samostatně níže (přejmenuje na $TARGET_DIR).
+          rsync -av \
+            --exclude='/public' \
+            --exclude='/node_modules' \
+            --exclude='/assets' \
+            --exclude='/.git' \
+            --exclude='/.github' \
+            --exclude='/production-repo' \
+            --exclude='/.vscode' \
+            --exclude='/.claude' \
+            --exclude='/.DS_Store' \
+            --exclude='/docker-compose.yml' \
+            --exclude='/devstack.md' \
+            --exclude='/README.md' \
+            ./ production-repo/
+
+      - name: Sync public/ → $TARGET_DIR/ (subdomain docroot)
+        run: |
+          # Obsah source/public/ skončí v adresáři pojmenovaném podle subdomény.
+          # Trailing slash u source je důležitý — zkopíruje OBSAH public/, ne samotnou složku.
+          mkdir -p "production-repo/${TARGET_DIR}"
+          rsync -av ./public/ "production-repo/${TARGET_DIR}/"
+
+      - name: Commit and force-push to production
+        id: push
+        working-directory: production-repo
+        run: |
+          git config user.email "actions@github.com"
+          git config user.name "GitHub Actions"
+          git add -A
+          if git diff --staged --quiet; then
+            echo "Žádné změny k deployi."
+            echo "deployed=false" >> "$GITHUB_OUTPUT"
+          else
+            git commit -m "Deploy from GitHub Actions: ${{ github.sha }}"
+            git push origin production-deploy:production --force
+            echo "Deploy pushnut do production branch. Hosting nyní spustí FTP deploy."
+            echo "deployed=true" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Post-deploy smoke test
+        if: steps.push.outputs.deployed == 'true'
+        run: |
+          # Hosting potřebuje pár desítek sekund na FTP deploy.
+          # Pollujeme URL až 6× (60s celkem) a hledáme HTTP 200.
+          echo "Čekám na dokončení deployi na hostingu..."
+          sleep 10
+
+          for attempt in 1 2 3 4 5 6; do
+            HTTP_CODE=$(curl -sSL -o /dev/null -w "%{http_code}" --max-time 30 "$PRODUCTION_URL" || echo "000")
+            if [ "$HTTP_CODE" = "200" ]; then
+              echo "✓ Smoke test OK ($PRODUCTION_URL → HTTP 200) na $attempt. pokus."
+              exit 0
+            fi
+            echo "Pokus $attempt/6: HTTP $HTTP_CODE — zkouším znovu za 10s..."
+            sleep 10
+          done
+
+          echo "::error::Smoke test selhal. $PRODUCTION_URL nevrací HTTP 200 ani po 60 vteřinách. Zkontroluj produkci ručně."
+          exit 1

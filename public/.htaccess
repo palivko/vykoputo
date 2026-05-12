@@ -1,0 +1,71 @@
+# --------------------------------------------------------------------
+# Plain PHP web — production-ready .htaccess
+# --------------------------------------------------------------------
+
+RewriteEngine On
+RewriteBase /
+
+# --- HTTPS redirect (přeskočí localhost a interní docker) ----------
+<IfModule mod_rewrite.c>
+    RewriteCond %{HTTP_HOST} !^localhost [NC]
+    RewriteCond %{HTTP_HOST} !^127\.0\.0\.1 [NC]
+    RewriteCond %{HTTPS} !=on
+    RewriteCond %{HTTP:X-Forwarded-Proto} !=https
+    RewriteRule ^ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
+</IfModule>
+
+# --- Pretty URLs: /about → /about.php (volitelné) -------------------
+# Apache zkusí přidat .php k URL bez přípony, pokud soubor existuje.
+<IfModule mod_rewrite.c>
+    RewriteCond %{REQUEST_FILENAME} !-f
+    RewriteCond %{REQUEST_FILENAME} !-d
+    RewriteCond %{REQUEST_FILENAME}.php -f
+    RewriteRule ^(.+)$ $1.php [L]
+</IfModule>
+
+# --- Gzip / Deflate -----------------------------------------------
+<IfModule mod_deflate.c>
+    AddOutputFilterByType DEFLATE text/html text/plain text/css text/javascript
+    AddOutputFilterByType DEFLATE application/javascript application/x-javascript
+    AddOutputFilterByType DEFLATE application/json application/xml
+    AddOutputFilterByType DEFLATE image/svg+xml font/ttf font/otf font/woff font/woff2
+</IfModule>
+
+# --- Cache-Control hlavičky ---------------------------------------
+<IfModule mod_expires.c>
+    ExpiresActive On
+    ExpiresDefault "access plus 1 hour"
+
+    # Statické assety — dlouhý cache (build je deterministický, při změně se mění obsah a cesta zůstává)
+    ExpiresByType text/css "access plus 1 month"
+    ExpiresByType application/javascript "access plus 1 month"
+    ExpiresByType application/x-javascript "access plus 1 month"
+    ExpiresByType image/jpeg "access plus 6 months"
+    ExpiresByType image/png "access plus 6 months"
+    ExpiresByType image/gif "access plus 6 months"
+    ExpiresByType image/svg+xml "access plus 6 months"
+    ExpiresByType image/webp "access plus 6 months"
+    ExpiresByType font/woff "access plus 1 year"
+    ExpiresByType font/woff2 "access plus 1 year"
+    ExpiresByType font/ttf "access plus 1 year"
+
+    # HTML — krátký cache (obsah se mění)
+    ExpiresByType text/html "access plus 0 seconds"
+</IfModule>
+
+# --- Bezpečnostní hlavičky ----------------------------------------
+<IfModule mod_headers.c>
+    Header set X-Content-Type-Options "nosniff"
+    Header set X-Frame-Options "SAMEORIGIN"
+    Header set Referrer-Policy "strict-origin-when-cross-origin"
+    Header set Permissions-Policy "camera=(), microphone=(), geolocation=(self)"
+    # HSTS — pouze na produkci (na localhost mod_rewrite výše už redirect přeskočil)
+    <If "%{HTTP_HOST} != 'localhost' && %{HTTPS} == 'on'">
+        Header always set Strict-Transport-Security "max-age=31536000; includeSubDomains"
+    </If>
+</IfModule>
+
+# --- Zákaz přístupu k citlivým souborům ---------------------------
+<FilesMatch "^\.(?!well-known)|package(-lock)?\.json|tailwind\.config\.js|README\.md|devstack\.md">
+    Require all denied
+</FilesMatch>

@@ -1,0 +1,40 @@
+# Dependencies
+node_modules/
+
+# macOS
+.DS_Store
+.AppleDouble
+.LSOverride
+
+# Editor & IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# Claude Code (lokální nastavení)
+.claude/settings.local.json
+
+# Logs
+*.log
+logs/
+error_log
+
+# Build artefakty (generuje GitHub Actions přes `npm run build` před deployem)
+# Tailwind output
+public/assets/css/app.css
+# Bootstrap Icons (kopie z node_modules)
+public/assets/css/fonts/
+src/css/bootstrap-icons.css
+# Leaflet (kopie z node_modules)
+public/assets/css/leaflet.css
+public/assets/css/images/
+public/assets/js/leaflet.js
+# Lucide Icons (kopie z node_modules)
+public/assets/js/lucide.min.js
+# Rellax (kopie z node_modules)
+public/assets/js/rellax.min.js
+# GLightbox (kopie z node_modules)
+public/assets/js/glightbox.min.js
+public/assets/css/glightbox.min.css

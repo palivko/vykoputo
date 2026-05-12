@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-label="Vykopu.to">
+  <!-- Tmavé pozadí s rounded rohy -->
+  <rect width="64" height="64" rx="12" fill="#1A1C1A"/>
+  <!-- Cream "v" -->
+  <path d="M 14 18 L 26.5 46 L 32.5 46 L 45 18 L 38 18 L 29.5 38.5 L 21 18 Z" fill="#F5F1EA"/>
+  <!-- Oranžová tečka (akcent z ".to") -->
+  <circle cx="50" cy="44" r="5" fill="#E87722"/>
+</svg>
