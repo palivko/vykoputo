@@ -73,6 +73,4 @@ Fonty: **Archivo** (display, 600/700/900) + **Inter** (body, 400/500/600) — Go
 - [ ] Fotky dokončených zakázek od klienta → sekce Reference
 - [ ] Fotky strojů od klienta (náhrada stock fotek v sekci Technika)
 - [ ] OG image v rozměru 1200×630 px (`public/assets/images/og-image.jpg`)
-- [ ] Ověřit funkčnost `mail()` na Blueboard (testovací odeslání formuláře)
 - [ ] Registrovat v Google Search Console + odeslat sitemap
-- [ ] Po odsouhlasení klientem: změnit `PRODUCTION_TARGET_DIR` z `new` na `www`
