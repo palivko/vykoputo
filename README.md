@@ -1,75 +1,78 @@
-# Web Starter
+# Vykopu.to — webová prezentace
 
-Šablona pro nový web v plain PHP (bez CMS) na sdíleném PHP hostingu s automatickým CI/CD přes GitHub Actions.
+Onepage web pro Petra Glasera, výkopové a terénní práce Fulnek a okolí.
+Plain PHP + Tailwind CSS, hostováno na Blueboard.cz, automatický deploy přes GitHub Actions.
 
-## Co je v balíčku
+**Produkce:** https://vykopu.to
 
-- **Plain PHP** s `includes/header.php` + `includes/footer.php` (žádný CMS, žádný framework)
-- **Tailwind CSS** + npm build pipeline (Tailwind, bootstrap-icons, lucide, leaflet, rellax, glightbox)
-- **Sharp** pro optimalizaci obrázků
-- **Docker Compose** pro lokální vývoj (`webdevops/php-apache:8.3`)
-- **GitHub Actions** workflow `deploy.yml` — build + push do hosting `production` branch + smoke test
-- **Dependabot** pro automatické updaty npm/actions závislostí
+## Stack
 
-Architektura, specifika hostingu a podrobný checklist nasazení jsou v [`devstack.md`](devstack.md).
+- **Plain PHP 8.3** — žádný CMS, žádný framework; šablony přes `require` includes
+- **Tailwind CSS 3** + npm build pipeline (bootstrap-icons, lucide, glightbox, leaflet, rellax)
+- **Sharp** — optimalizace obrázků (`assets/images/` → `public/assets/images/`)
+- **Docker Compose** — lokální vývoj (`webdevops/php-apache:8.3`, port 8080)
+- **GitHub Actions** — build + deploy do Blueboard přes Git push + smoke test
+- **Dependabot** — automatické PR pro updaty npm/actions závislostí
 
-## Rychlé spuštění (lokálně)
+## Lokální vývoj
 
 ```bash
 docker compose up      # web na http://localhost:8080
-npm install            # první run — instalace npm závislostí
-npm run dev            # Tailwind watch mode
+npm install            # první run — instalace závislostí
+npm run dev            # Tailwind watch mode (rebuild CSS při uložení)
+npm run build          # produkční build (CSS + kopie assetů + optimalizace obrázků)
 ```
 
-## Setup nového projektu (krátká verze)
-
-1. Klikni „Use this template" v GitHubu (nebo `git clone` a `rm -rf .git && git init`)
-2. Customize `package.json` (`name`, `description`) a `includes/config.php` (title, description, nav)
-3. Objednej hosting Blueboard (nebo ekvivalent), aktivuj Git přístup, vytvoř subdoménu jako adresář v rootu
-4. Vygeneruj SSH deploy klíč: `ssh-keygen -t ed25519 -f deploy_key -N "" -C "github-actions"`
-5. Veřejný klíč přidej do hosting Git sekce
-6. V GitHub Settings → Secrets and variables → Actions:
-   - **Secrets:** `PRODUCTION_SSH_KEY`
-   - **Variables:** `PRODUCTION_TARGET_DIR`, `PRODUCTION_GIT_REMOTE`, `PRODUCTION_GIT_HOST`, `PRODUCTION_URL`
-7. Push do `main` → deploy proběhne → otevři produkční URL
-
-Detailní kroky v [`devstack.md`](devstack.md) (sekce „Postup nasazení nového projektu").
-
-## Build pipeline
-
-```bash
-npm run build       # produkční build (kopie assetů + minified Tailwind)
-npm run dev         # Tailwind watch mode
-```
-
-Build vytvoří soubory v `public/assets/` (gitignored — generuje GitHub Actions před deployem). Pro lokální testování stačí pustit `npm run build` jednou; pro vývoj použij `npm run dev`.
-
-## Struktura
+## Struktura projektu
 
 ```
-public/                ← document root (Apache zde hledá index.php)
-  index.php            ← homepage
-  about.php            ← příklad další stránky (dostupná i jako /about)
-  .htaccess            ← HTTPS, gzip, cache, security headers, pretty URLs
-  assets/              ← vybuildované CSS/JS/obrázky (gitignored)
-includes/              ← PHP includes (header, footer, config, helpery)
-src/css/               ← zdrojová Tailwind CSS (app.css)
-assets/images/         ← zdrojové obrázky (Sharp je optimalizuje do public/)
-scripts/               ← build skripty (optimize-images.mjs)
-.github/               ← GitHub Actions workflow + Dependabot
-package.json           ← npm závislosti + build scripty
-tailwind.config.js     ← Tailwind theme (per-projekt customize)
-docker-compose.yml     ← lokální Apache + PHP-FPM
+public/
+  index.php              ← onepage homepage (jediná stránka webu)
+  robots.txt             ← crawling pravidla pro vyhledávače
+  sitemap.xml            ← sitemap pro Google Search Console
+  .htaccess              ← HTTPS redirect, gzip, cache, security headers
+  assets/images/         ← loga a favicona (SVG, gitováno)
+                           + optimalizované fotky (generuje Sharp při buildu)
+
+includes/
+  config.php             ← site title, kontaktní údaje, anchor navigace
+  header.php             ← <head> s OG tagy, fixní nav s hamburgerem
+  footer.php             ← patička, inicializace Lucide ikon
+  form.php               ← zpracování kontaktního formuláře (PHP mail)
+
+src/css/app.css          ← Tailwind zdroj (base, components, utilities)
+assets/images/           ← zdrojové fotky (Sharp je optimalizuje do public/)
+tailwind.config.js       ← brand paleta (ink/cream/clay/stone) + fonty
+docker-compose.yml       ← lokální Apache + PHP-FPM
+.github/workflows/       ← deploy.yml + dependabot.yml
 ```
 
-Generované adresáře (`node_modules/`, build artefakty v `public/assets/`) jsou gitignored.
+## Deploy
 
-## Pretty URLs
+Push do `main` → GitHub Actions buildne (npm + Sharp) → pushne na Blueboard → smoke test.
 
-`.htaccess` automaticky mapuje URL bez přípony na `.php` soubor — `/about` → `/about.php`. Stačí přidat soubor do `public/` a hned je dostupný oběma způsoby.
+**GitHub Secrets:** `PRODUCTION_SSH_KEY`
 
-## Více info
+**GitHub Variables:** `PRODUCTION_GIT_REMOTE`, `PRODUCTION_GIT_HOST`, `PRODUCTION_TARGET_DIR`, `PRODUCTION_URL`
 
-- Architektura CI/CD a specifika hostingu → [`devstack.md`](devstack.md)
-- [Tailwind docs](https://tailwindcss.com/docs)
-- [Blueboard nápověda](https://hosting.blueboard.cz/napoveda/)
+Detailní popis CI/CD pipeline a specifika Blueboard hostingu → [`devstack.md`](devstack.md)
+
+## Brand
+
+| Token | Hex | Použití |
+|---|---|---|
+| `ink-900` | `#1A1C1A` | Hero, footer, tmavé sekce |
+| `cream` | `#F5F1EA` | Hlavní pozadí, světlé sekce |
+| `clay` | `#E87722` | CTA, telefon, akcenty |
+| `stone-500` | `#8B857A` | Sekundární text |
+
+Fonty: **Archivo** (display, 600/700/900) + **Inter** (body, 400/500/600) — Google Fonts.
+
+## Otevřené body
+
+- [ ] Fotky dokončených zakázek od klienta → sekce Reference
+- [ ] Fotky strojů od klienta (náhrada stock fotek v sekci Technika)
+- [ ] OG image v rozměru 1200×630 px (`public/assets/images/og-image.jpg`)
+- [ ] Ověřit funkčnost `mail()` na Blueboard (testovací odeslání formuláře)
+- [ ] Registrovat v Google Search Console + odeslat sitemap
+- [ ] Po odsouhlasení klientem: změnit `PRODUCTION_TARGET_DIR` z `new` na `www`
