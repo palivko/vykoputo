@@ -15,6 +15,19 @@ $pageDescription = $pageDescription ?? $config['site']['description'];
         <title><?= h($pageTitle) ?> | <?= h($config['site']['title']) ?></title>
     <?php endif ?>
     <meta name="description" content="<?= h($pageDescription) ?>">
+
+    <!-- Open Graph -->
+    <meta property="og:type"        content="website">
+    <meta property="og:locale"      content="cs_CZ">
+    <meta property="og:site_name"   content="<?= h($config['site']['title']) ?>">
+    <meta property="og:title"       content="<?= h($pageTitle) ?>">
+    <meta property="og:description" content="<?= h($pageDescription) ?>">
+    <meta property="og:url"         content="https://vykopu.to<?= h(strtok($_SERVER['REQUEST_URI'] ?? '/', '?')) ?>">
+    <meta property="og:image"       content="https://vykopu.to/assets/images/bagr-hero.jpg">
+    <meta property="og:image:width"  content="1200">
+    <meta property="og:image:height" content="630">
+    <meta property="og:image:alt"    content="Výkopové a terénní práce Fulnek a okolí — vykopu.to">
+
     <link rel="icon" type="image/svg+xml" href="/assets/images/favicon.svg">
     <!-- Google Fonts: Archivo (display) + Inter (body) -->
     <link rel="preconnect" href="https://fonts.googleapis.com">

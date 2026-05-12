@@ -14,7 +14,7 @@ require __DIR__ . '/../includes/header.php';
      ══════════════════════════════════════════════════════════════════════════ -->
 <section id="hero"
          class="relative min-h-[680px] flex flex-col bg-ink-900"
-         style="background-image: linear-gradient(to bottom, rgba(26,28,26,0.95) 0%, rgba(26,28,26,0.85) 40%, rgba(26,28,26,0.75) 100%), url('/assets/images/bagr-hero.png'); background-size: cover; background-position: center;">
+         style="background-image: linear-gradient(to bottom, rgba(26,28,26,0.95) 0%, rgba(26,28,26,0.85) 40%, rgba(26,28,26,0.75) 100%), url('/assets/images/bagr-hero.jpg'); background-size: cover; background-position: center;">
 
     <div class="flex-1 flex flex-col justify-end max-w-7xl mx-auto w-full px-5 pb-20 pt-36">
 
