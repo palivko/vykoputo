@@ -5,7 +5,7 @@
 $config = [
     'site' => [
         'title'       => 'vykopu.to',
-        'description' => 'Výkopové a terénní práce ve Fulneku a okolí. Vlastní bagr JCB 19C-1, malotraktor Yanmar F200 a hákový kontejner do 5 tun. Nezávazná poptávka.',
+        'description' => 'Výkopové a terénní práce ve Fulneku a okolí. Vlastní bagr JCB 19C-1, malotraktor Yanmar F200 a hákový kontejner s nosností 5 tun. Nezávazná poptávka.',
         'lang'        => 'cs',
     ],
 
@@ -26,7 +26,7 @@ $config = [
         '#technika'      => 'Technika',
         '#kde-pracujeme' => 'Kde pracujeme',
         '#reference'     => 'Reference',
-        '#proc-nas'      => 'Proč nás',
+        '#proc-nas'      => 'Proč my',
         '#kontakt'       => 'Kontakt',
     ],
 

@@ -3,7 +3,7 @@ require __DIR__ . '/../includes/form.php';
 
 // ── Hlavička stránky ─────────────────────────────────────────────────────────
 $pageTitle       = 'Výkopové a terénní práce Fulnek a okolí';
-$pageDescription = 'Výkopové práce, terénní úpravy, pokládka dlažby a realizace plotů ve Fulneku a okolí. Vlastní bagr JCB 19C-1, malotraktor Yanmar F200 a hákový kontejner do 5 tun. Nezávazná poptávka.';
+$pageDescription = 'Výkopové práce, terénní úpravy, pokládka dlažby a realizace plotů ve Fulneku a okolí. Vlastní bagr JCB 19C-1, malotraktor Yanmar F200 a hákový kontejner s nosností 5 tun. Nezávazná poptávka.';
 require __DIR__ . '/../includes/header.php';
 ?>
 
@@ -48,10 +48,10 @@ require __DIR__ . '/../includes/header.php';
         <div class="mb-14">
             <span class="section-label">Co umíme</span>
             <h2 class="font-display font-black text-h2 text-ink mb-4">
-                Kompletní výkopové a terénní práce<span class="text-clay">.</span>
+                Výkopové a terénní práce<span class="text-clay">.</span>
             </h2>
             <p class="font-body text-stone-500 text-lg">
-                Pro rodinné domy, zahrady a bazény. Od základů po povrchové úpravy.
+                Komplexní služby pro rodinné domy, zahrady a bazény. Od základů po povrchové úpravy.
             </p>
         </div>
 
@@ -198,7 +198,7 @@ require __DIR__ . '/../includes/header.php';
                     <h3 class="font-display font-bold text-xl text-cream mb-3">Hákový 5&nbsp;tun</h3>
                     <p class="font-body text-stone-500 leading-relaxed text-sm">
                         Odvoz vykopané zeminy, suti a demoličního odpadu.
-                        Nosnost 5&nbsp;t, k dispozici ve více velikostech.
+                        Nosnost 5&nbsp;tun, dostačující pro většinu zakázek.
                     </p>
                 </div>
             </article>
@@ -244,7 +244,7 @@ require __DIR__ . '/../includes/header.php';
                 </div>
 
                 <p class="font-body text-stone-500 text-sm">
-                    … a okolní obce do 30&nbsp;km. Bez ostychu nás kontaktujte i na vzdálenější zakázky.
+                    … a okolní obce do 30&nbsp;km. Bez ostychu nás ale kontaktujte i na vzdálenější zakázky.
                 </p>
             </div>
 
@@ -361,7 +361,7 @@ require __DIR__ . '/../includes/header.php';
                     <h3 class="font-display font-bold text-lg text-ink mb-2">Vlastní technika</h3>
                     <p class="font-body text-stone-500 text-sm leading-relaxed">
                         Bagr, traktor i kontejner máme vlastní.
-                        Žádné půjčovny, žádné čekání na&nbsp;partnery.
+                        Žádné půjčovny, žádné čekání na&nbsp;subdodavatele.
                     </p>
                 </article>
 
@@ -369,8 +369,8 @@ require __DIR__ . '/../includes/header.php';
                     <p class="font-display font-black text-4xl text-clay mb-4 leading-none">03</p>
                     <h3 class="font-display font-bold text-lg text-ink mb-2">Pracuju sám</h3>
                     <p class="font-body text-stone-500 text-sm leading-relaxed">
-                        OSVČ. Bagrují vám stejné ruce, se kterými
-                        si telefonujete. Bez korporátních zdržení.
+                        Jsem živnostník. Bagrují vám stejné ruce, se kterými
+                        si telefonujete. Bez zbytečného zdržení.
                     </p>
                 </article>
 
@@ -423,7 +423,7 @@ require __DIR__ . '/../includes/header.php';
                         <span class="text-clay text-2xl flex-shrink-0 transition-transform duration-200 group-open:rotate-45" aria-hidden="true">+</span>
                     </summary>
                     <p class="mt-3 font-body text-stone-500 pr-10 leading-relaxed">
-                        Ano. Hákový kontejner s nosností 5&nbsp;t je součástí naší techniky.
+                        Ano. Hákový kontejner s nosností 5&nbsp;tun je součástí naší techniky.
                         Vykopat i odvézt zvládneme v jedné návštěvě.
                     </p>
                 </details>
@@ -445,7 +445,7 @@ require __DIR__ . '/../includes/header.php';
                         <span class="text-clay text-2xl flex-shrink-0 transition-transform duration-200 group-open:rotate-45" aria-hidden="true">+</span>
                     </summary>
                     <p class="mt-3 font-body text-stone-500 pr-10 leading-relaxed">
-                        Obvykle do týdne. V sezóně (jaro–léto) doporučujeme
+                        Obvykle do týdne. V rozběhlé sezóně, v průběhu jara a léta, doporučujeme
                         objednat se s předstihem.
                     </p>
                 </details>
@@ -543,7 +543,7 @@ require __DIR__ . '/../includes/header.php';
                             <input type="text" id="name" name="name" required
                                    value="<?= h($_POST['name'] ?? '') ?>"
                                    class="w-full bg-ink-900 border border-ink-700 text-cream placeholder-stone-500 px-4 py-3.5 rounded font-body text-base focus:outline-none focus:border-clay transition-colors"
-                                   placeholder="Jan Novák">
+                                   placeholder="Vaše jméno">
                         </div>
 
                         <div>
@@ -553,7 +553,7 @@ require __DIR__ . '/../includes/header.php';
                             <input type="email" id="email" name="email" required
                                    value="<?= h($_POST['email'] ?? '') ?>"
                                    class="w-full bg-ink-900 border border-ink-700 text-cream placeholder-stone-500 px-4 py-3.5 rounded font-body text-base focus:outline-none focus:border-clay transition-colors"
-                                   placeholder="jan@example.com">
+                                   placeholder="vas@email.cz">
                         </div>
 
                         <div>
@@ -570,7 +570,7 @@ require __DIR__ . '/../includes/header.php';
                             <label for="message" class="block text-xs font-display font-semibold text-cream/50 uppercase tracking-widest mb-2">
                                 Krátká zpráva <span class="text-clay">*</span>
                             </label>
-                            <textarea id="message" name="message" required rows="3"
+                            <textarea id="message" name="message" required rows="4"
                                       class="w-full bg-ink-900 border border-ink-700 text-cream placeholder-stone-500 px-4 py-3.5 rounded font-body text-base focus:outline-none focus:border-clay transition-colors resize-none"
                                       placeholder="Popište prosím, co potřebujete — druh práce, přibližnou plochu nebo objem, lokalitu a termín."><?= h($_POST['message'] ?? '') ?></textarea>
                         </div>
