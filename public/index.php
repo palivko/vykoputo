@@ -2,8 +2,8 @@
 require __DIR__ . '/../includes/form.php';
 
 // ── Hlavička stránky ─────────────────────────────────────────────────────────
-$pageTitle       = 'Výkopové a terénní práce Fulnek a okolí';
-$pageDescription = 'Výkopové práce, terénní úpravy, pokládka dlažby a realizace plotů ve Fulneku a okolí. Vlastní bagr JCB 19C-1, malotraktor Yanmar F200 a hákový kontejner s nosností 5 tun. Nezávazná poptávka.';
+$pageTitle       = 'Výkopové a terénní práce — okres Nový Jičín';
+$pageDescription = 'Výkopové práce, terénní úpravy, pokládka dlažby a realizace plotů v okrese Nový Jičín. Vlastní bagr JCB 19C-1, malotraktor Yanmar F200 a hákový kontejner s nosností 5 tun. Nezávazná poptávka.';
 require __DIR__ . '/../includes/header.php';
 ?>
 
@@ -18,7 +18,7 @@ require __DIR__ . '/../includes/header.php';
 
     <div class="flex-1 flex flex-col justify-end max-w-7xl mx-auto w-full px-5 pb-20 pt-36">
 
-        <p class="section-label">Fulnek a okolí — okres Nový Jičín</p>
+        <p class="section-label">Okres Nový Jičín</p>
 
         <h1 class="font-display font-black text-hero text-cream mb-6 max-w-2xl">
             Kopeme,<br>pokládáme,<br>upravujeme<span class="text-clay">.</span>
@@ -168,7 +168,7 @@ require __DIR__ . '/../includes/header.php';
             <!-- Yanmar F200 -->
             <article class="bg-ink-800 rounded-lg overflow-hidden">
                 <div class="relative aspect-[4/3] overflow-hidden">
-                    <img src="/assets/images/traktor.jpg"
+                    <img src="/assets/images/traktor.png"
                          alt="Malotraktor Yanmar F200"
                          class="w-full h-full object-cover"
                          loading="lazy">
@@ -187,7 +187,7 @@ require __DIR__ . '/../includes/header.php';
             <!-- Hákový kontejner -->
             <article class="bg-ink-800 rounded-lg overflow-hidden">
                 <div class="relative aspect-[4/3] overflow-hidden">
-                    <img src="/assets/images/kontejner.jpg"
+                    <img src="/assets/images/kontejner.png"
                          alt="Hákový kontejner 5 t"
                          class="w-full h-full object-cover"
                          loading="lazy">
@@ -211,7 +211,7 @@ require __DIR__ . '/../includes/header.php';
 <!-- ════════════════════════════════════════════════════════════════════════════
      SEKCE 4: KDE PRACUJEME (světlá) — skrytá na mobilu
      ══════════════════════════════════════════════════════════════════════════ -->
-<section id="kde-pracujeme" class="bg-cream py-20 px-5">
+<section id="kde-pracujeme" class="bg-cream-50 py-20 px-5">
     <div class="max-w-7xl mx-auto">
         <div class="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
 
@@ -219,7 +219,7 @@ require __DIR__ . '/../includes/header.php';
             <div>
                 <span class="section-label">Kde pracujeme</span>
                 <h2 class="font-display font-black text-h2 text-ink mb-4">
-                    Fulnek a okolí,<br />okres Nový Jičín<span class="text-clay">.</span>
+                    Okres Nový Jičín<br />a okolí<span class="text-clay">.</span>
                 </h2>
                 <p class="font-body text-stone-500 text-lg mb-10">
                     Dojezd zpravidla do 30 minut. Vzdálenější zakázky podle dohody.
@@ -249,9 +249,9 @@ require __DIR__ . '/../includes/header.php';
             </div>
 
             <!-- Pravý sloupec: SVG diagram akčního radiusu -->
-            <div class="overflow-visible" aria-hidden="true">
+            <div aria-hidden="true">
                 <svg viewBox="0 0 360 360" xmlns="http://www.w3.org/2000/svg"
-                     class="block w-full lg:w-[560px] lg:h-[560px] lg:-ml-[100px]">
+                     class="w-full h-auto">
                     <!-- Soustředné kruhy -->
                     <circle cx="180" cy="180" r="60"  fill="none" stroke="#D8D2C7" stroke-width="1"/>
                     <circle cx="180" cy="180" r="115" fill="none" stroke="#D8D2C7" stroke-width="1"/>
@@ -304,35 +304,6 @@ require __DIR__ . '/../includes/header.php';
 
 
 <!-- ════════════════════════════════════════════════════════════════════════════
-     SEKCE 5: REFERENCE (tmavá) — skrytá na mobilu
-     ══════════════════════════════════════════════════════════════════════════ -->
-<section id="reference" class="bg-ink-900 py-24 px-5">
-    <div class="max-w-7xl mx-auto">
-
-        <div class="mb-14">
-            <span class="section-label">Reference</span>
-            <h2 class="font-display font-black text-h2 text-cream mb-4">
-                Hotové zakázky<span class="text-clay">.</span>
-            </h2>
-            <p class="font-body text-stone-500 text-lg">
-                Věříme, že nejlepší reference je hotová práce.
-                Tady jsou důkazy — reálné zakázky z&nbsp;Fulneku a&nbsp;okolí.
-            </p>
-        </div>
-
-        <!-- Galerie placeholder — fotky doplní klient -->
-        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-            <?php for ($i = 1; $i <= 6; $i++): ?>
-            <div class="aspect-[4/3] bg-ink-800 rounded-lg flex items-center justify-center text-ink-700 border border-ink-700">
-                <i data-lucide="image" class="w-10 h-10 opacity-30"></i>
-            </div>
-            <?php endfor ?>
-        </div>
-    </div>
-</section>
-
-
-<!-- ════════════════════════════════════════════════════════════════════════════
      SEKCE 6: PROČ NÁS + FAQ (světlá)
      ══════════════════════════════════════════════════════════════════════════ -->
 <section id="proc-nas" class="bg-cream py-24 px-5">
@@ -351,8 +322,8 @@ require __DIR__ . '/../includes/header.php';
                     <p class="font-display font-black text-4xl text-clay mb-4 leading-none">01</p>
                     <h3 class="font-display font-bold text-lg text-ink mb-2">Lokální</h3>
                     <p class="font-body text-stone-500 text-sm leading-relaxed">
-                        Sídlíme přímo ve Fulneku. Známe terén,
-                        dojedeme rychle, pomůžeme i s&nbsp;drobnými pracemi.
+                        Působíme v&nbsp;celém okrese Nový Jičín.
+                        Dojedeme rychle, pomůžeme i s&nbsp;drobnými pracemi.
                     </p>
                 </article>
 

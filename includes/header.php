@@ -26,7 +26,7 @@ $pageDescription = $pageDescription ?? $config['site']['description'];
     <meta property="og:image"       content="https://vykopu.to/assets/images/bagr-hero.jpg">
     <meta property="og:image:width"  content="1200">
     <meta property="og:image:height" content="630">
-    <meta property="og:image:alt"    content="Výkopové a terénní práce Fulnek a okolí — vykopu.to">
+    <meta property="og:image:alt"    content="Výkopové a terénní práce — okres Nový Jičín — vykopu.to">
 
     <link rel="icon" type="image/svg+xml" href="/assets/images/favicon.svg">
     <!-- Google Fonts: Archivo (display) + Inter (body) -->

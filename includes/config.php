@@ -5,17 +5,17 @@
 $config = [
     'site' => [
         'title'       => 'vykopu.to',
-        'description' => 'Výkopové a terénní práce ve Fulneku a okolí. Vlastní bagr JCB 19C-1, malotraktor Yanmar F200 a hákový kontejner s nosností 5 tun. Nezávazná poptávka.',
+        'description' => 'Výkopové a terénní práce v okrese Nový Jičín. Vlastní bagr JCB 19C-1, malotraktor Yanmar F200 a hákový kontejner s nosností 5 tun. Nezávazná poptávka.',
         'lang'        => 'cs',
     ],
 
     // Kontaktní údaje — používají se v navigaci, patičce i formuláři
     'contact' => [
         'phone'   => '+420 737 600 705',
-        'email'   => 'palivko@gmail.com',
+        'email'   => 'info@vykopu.to',
         'name'    => 'Petr Glaser',
         'address' => 'Jerlochovice 61, 742 45 Fulnek',
-        'area'    => 'Fulnek a okolí, okres Nový Jičín',
+        'area'    => 'Okres Nový Jičín',
         'ico'     => '10837485',
         'ucet'     => '123456789/0800',
     ],
@@ -25,7 +25,6 @@ $config = [
         '#sluzby'        => 'Služby',
         '#technika'      => 'Technika',
         '#kde-pracujeme' => 'Kde pracujeme',
-        '#reference'     => 'Reference',
         '#proc-nas'      => 'Proč my',
         '#kontakt'       => 'Kontakt',
     ],
