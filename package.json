@@ -15,7 +15,7 @@
         "dev": "npm run copy-fonts && npm run copy-js && npm run watch-css"
     },
     "devDependencies": {
-        "sharp": "^0.34.0",
+        "sharp": "^0.35.1",
         "tailwindcss": "^3.4.0"
     },
     "dependencies": {
