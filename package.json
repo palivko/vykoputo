@@ -22,7 +22,7 @@
         "bootstrap-icons": "^1.13.0",
         "glightbox": "^3.3.0",
         "leaflet": "^1.9.0",
-        "lucide": "^1.14.0",
+        "lucide": "^1.28.0",
         "rellax": "^1.12.0"
     }
 }
